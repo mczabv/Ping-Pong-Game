@@ -28,9 +28,27 @@ class Player(GameSprite):
             self.rect.y -= self.speed
         if keys[K_DOWN] and self.rect.y < 500 - 150:
             self.rect.y += self.speed
+# Ball Class
+class Ball(GameSprite):
+    def __init__(self, player_image, player_x, player_y, size_x, size_y, speed_x, speed_y):
+        super().__init__(player_image, player_x, player_y, size_x, size_y, 0)
+        self.speed_x = speed_x
+        self.speed_y = speed_y
+
+    def update(self):
+        # Everything below here needs to be indented TWICE (8 spaces total)
+        self.rect.x += self.speed_x
+        self.rect.y += self.speed_y
+
+        if self.rect.y > 500 - 50 or self.rect.y < 0:
+            self.speed_y *= -1  
+
 #create rackets
 paddle1 = Player("racket.png", 30, 200, 30, 150, 8) #left racket
 paddle2 = Player("racket.png", 640, 200, 30, 150, 8) #right racket
+
+#create ball
+ball = Ball("ball.png", 325, 225, 50, 50, 4, 4)
 
 # Initialize Pygame
 init()
@@ -58,13 +76,15 @@ while game:
     # Fill the background with light blue
     window.fill(LIGHT_BLUE)
 
-    # Move the paddles based on keyboard input
+# Move and draw paddles
     paddle1.update_l()
     paddle2.update_r()
-
-    # Draw the paddles on the screen
     paddle1.reset()
     paddle2.reset()
+
+    # Move and draw the ball
+    ball.update()
+    ball.reset()
 
     # Refresh the screen
     display.update()
