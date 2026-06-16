@@ -86,6 +86,10 @@ while game:
     ball.update()
     ball.reset()
 
+    #collision
+    if sprite.collide_rect(paddle1, ball) or sprite.collide_rect(paddle2, ball):
+        ball.speed_x *= -1
+
     # Refresh the screen
     display.update()
     clock.tick(FPS)
